@@ -1,0 +1,23 @@
+{
+  "name": "developer-report",
+  "version": "1.0.0",
+  "description": "Per-developer reporting on activity: Mozilla Named Persons Only",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emceeaich/developer-report.git"
+  },
+  "author": "Emma Humphries",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emceeaich/developer-report/issues"
+  },
+  "homepage": "https://github.com/emceeaich/developer-report#readme",
+  "dependencies": {
+    "csvtojson": "^1.1.7",
+    "make-fetch-happen": "^2.4.13"
+  }
+}

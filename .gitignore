@@ -1,0 +1,6 @@
+*.swp
+*.tmp
+.DS_Store
+data
+out
+node_modules
