@@ -22,17 +22,21 @@ const csvFilePath = './data/org.csv';
 var devReports = [
     {title: "Review Requests P1",
      name: "reviewsP1",
-     url: reviews},
+     url: reviewsP1},
     {title: "Review Requests Other",
      name: "reviews",
      url: reviews},
     {title: "Needinfos P1",
      name: "needinfosP1",
-     url: needinfos},
+     url: needinfosP1},
     {title: "Needinfos Other",
      name: "needinfos",
      url: needinfos}
 ];
+
+var totals = {},
+    orgChart = [],
+    requests = [];
 
 /*
  * Read org chart
@@ -59,13 +63,36 @@ function createReport() {
     console.log(['report', 'manager', 'name', 'count'].join(', '));
     devReports.forEach(report => {
         orgChart.forEach(developer => {
-            fetch(report.url + encodeURIComponent(developer.bugmail))
-            .then(res => { return res.json() })
-            .then(body => {
-                console.log([report.title,
-                    developer.manager, developer.name, 
-                    body.bugs.length].join(', '));
-            });
+            // push each fetch for a developer stat onto the requests array
+            requests.push(fetch(report.url + encodeURIComponent(developer.bugmail))
+                .then(res => { return res.json() })
+                .then(body => {
+                    var manager = developer.manager,
+                        name = developer.name,
+                        title = report.title;
+
+                    console.log([title, manager, name, 
+                        body.bugs.length].join(', '));
+
+                    if (!totals[manager]) {
+                        totals[manager] = {};
+                    }
+                    if (!totals[manager][title]) {
+                            totals[manager][title] = 0;
+                    }
+                    
+                    totals[manager][title] = totals[manager][title] + body.bugs.length;
+                }));
+        });
+    });
+
+    // once all the fetches have returned iterate over our totals object
+    Promise.all(requests).then(function() {
+        Object.keys(totals).forEach(manager => {
+            Object.keys(totals[manager]).forEach(title => {
+                console.log([title, manager, '||| Total',
+                    totals[manager][title]].join(', '))
+            }) 
         });
     });
 }
