@@ -80,8 +80,11 @@ function createReport() {
                     if (!totals[manager][title]) {
                             totals[manager][title] = 0;
                     }
-                    
+
                     totals[manager][title] = totals[manager][title] + body.bugs.length;
+                })
+                .catch(error => {
+                    console.error(developer.bugmail, error);
                 }));
         });
     });

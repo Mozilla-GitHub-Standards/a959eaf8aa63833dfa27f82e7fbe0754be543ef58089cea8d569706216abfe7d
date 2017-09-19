@@ -19,5 +19,8 @@
   "dependencies": {
     "csvtojson": "^1.1.7",
     "make-fetch-happen": "^2.4.13"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.1"
   }
 }
